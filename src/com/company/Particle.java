@@ -16,9 +16,11 @@ public class Particle {
     }
 
     public void move() {
+
         if (Math.random() > 0.95){
-            direction = Direction.getRandomDirection();
+            direction= sense(direction);
         }
+        else { direction = Direction.getRandomDirection();}
         x += direction.x%Main.WIDTH;
         y += direction.y%Main.HEIGHT;
         if (x>=Main.WIDTH-1 || x<=1 || y>=Main.HEIGHT-1 || y<= 1){
@@ -29,7 +31,23 @@ public class Particle {
         }
 
 
-//        Main.table[y][x] += 0.01;
+        Main.table[y][x] += 0.01;
 
+    }
+
+    private Direction sense(Direction current) {
+        double front = Main.table[x+current.x][y+current.y];
+        double frontright = Main.table[x+Direction.getFrontRightTurn(current).x][y+Direction.getFrontRightTurn(current).y];;
+        double frontleft = Main.table[x+Direction.getFrontLeftTurn(current).x][y+Direction.getFrontLeftTurn(current).y];;
+        double max = front;
+        if (Math.max(max, frontright) == frontright){
+         max = frontright;
+         return Direction.getFrontRightTurn(current);
+        }
+        else if (Math.max(max, frontleft) == frontleft){
+            max = frontleft;
+            return Direction.getFrontLeftTurn(current);
+        }
+        return current;
     }
 }

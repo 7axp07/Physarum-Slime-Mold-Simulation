@@ -23,8 +23,11 @@ public enum Direction {
         return -1;
     }
 
-    public static Direction getLefTurn(Direction current) {
+    public static Direction getLeftTurn(Direction current) {
         return values()[(index(current)-2 +values().length)%values().length];
+    }
+    public static Direction getFrontLeftTurn(Direction current) {
+        return values()[(index(current)-1 +values().length)%values().length];
     }
 
     public static Direction getTurnAround(Direction current){
@@ -33,6 +36,10 @@ public enum Direction {
 
     public static Direction getRightTurn(Direction current) {
         return values()[(index(current)+2)% values().length];
+    }
+
+    public static Direction getFrontRightTurn(Direction current) {
+        return values()[(index(current)+1)% values().length];
     }
 
 }
