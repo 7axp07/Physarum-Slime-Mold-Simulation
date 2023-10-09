@@ -16,11 +16,15 @@ public class Particle {
     }
 
     public void move() {
-
+        direction= sense(direction);
         if (Math.random() > 0.95){
-            direction= sense(direction);
+            if (Math.random()>0.5){
+                direction = Direction.getFrontRightTurn(direction);
+            }
+            else {
+                direction = Direction.getFrontLeftTurn(direction);
+            }
         }
-        else { direction = Direction.getRandomDirection();}
         x += direction.x%Main.WIDTH;
         y += direction.y%Main.HEIGHT;
         if (x>=Main.WIDTH-1 || x<=1 || y>=Main.HEIGHT-1 || y<= 1){
@@ -31,7 +35,7 @@ public class Particle {
         }
 
 
-        Main.table[y][x] += 0.01;
+        Main.table[x][y] = 1;
 
     }
 
