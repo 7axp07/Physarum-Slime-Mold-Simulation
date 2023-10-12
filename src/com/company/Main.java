@@ -19,12 +19,12 @@ import static javafx.scene.paint.Color.*;
 
 public class Main extends Application {
 
-    static final int WIDTH = 200;
-    static final int HEIGHT = 200;
-    static final int PARTICLE_NUMBER = 100;
+    static final int WIDTH = 600;
+    static final int HEIGHT = 600;
+    static final int PARTICLE_NUMBER = 1000;
     Canvas canvas = new Canvas(WIDTH,HEIGHT);
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    Color particleColor = BLUE;
+    Color particleColor = CYAN;
     Color backgroundColor = BLACK;
 
 
@@ -63,7 +63,7 @@ public class Main extends Application {
             particles.add(particle);
         }
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), event -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), event -> {
            /* for (int i = 0; i < HEIGHT; i++) {
                 for (int j = 0; j < WIDTH; j++) {
                     Color color = new Color(table[i][j], table[i][j], table[i][j], 1);
@@ -82,32 +82,34 @@ public class Main extends Application {
 
 
             for (int p = 0; p < PARTICLE_NUMBER; p++) {
-                for (int i = 0; i < HEIGHT; i++) {
-                    for (int j = 0; j < WIDTH; j++) {
-                        if (i == particles.get(p).x && j == particles.get(p).y){
-                            trailMap[i][j] = particleColor;
-                            gc.setFill(trailMap[i][j]);
-                            gc.fillRect(i,j, 1,1);
-                        }
-                    }
-                }
+                trailMap[particles.get(p).x][particles.get(p).y] = particleColor;
+                gc.setFill(trailMap[particles.get(p).x][particles.get(p).y]);
+                gc.fillRect(particles.get(p).x,particles.get(p).y, 1,1);
                 particles.get(p).move();
-
             }
 
-            for (int i = 0; i < HEIGHT; i++) {
-                for (int j = 0; j < WIDTH; j++) {
-                    if (table[i][j] >= 0.01);
-                    table[i][j] = table[i][j]-0.01;
+            for (int i = 1; i+1 < HEIGHT; i++) {
+                for (int j = 1; j+1 < WIDTH; j++) {
+                    if (table[i][j] >= 0.1 ){
+                    table[i][j] = table[i][j]-0.01;}
+                   /* table[i+1][j+1] += 0.01;
+                    table[i+1][j] += 0.01;
+                    table[i+1][j-1] += 0.01;
+                    table[i][j-1] += 0.01;
+                    table[i-1][j-1] += 0.01;
+                    table[i-1][j] += 0.01;
+                    table[i-1][j+1] += 0.01;
+                    table[i][j+1] += 0.01;*/
                 }
             }
+
             for (int i = 0; i < HEIGHT; i++) {
                 for (int j = 0; j < WIDTH; j++) {
                     if (trailMap[i][j] != backgroundColor){
                         trailMap[i][j] = new Color(
-                                trailMap[i][j].getRed()*0.99 < 0.01 ? 0 : trailMap[i][j].getRed()*0.99,
-                                trailMap[i][j].getGreen()*0.99 < 0.01 ? 0 : trailMap[i][j].getGreen()*0.99,
-                                trailMap[i][j].getBlue()*0.99 < 0.01 ? 0 : trailMap[i][j].getBlue()*0.99,
+                                trailMap[i][j].getRed()*0.97 < 0.01 ? 0 : trailMap[i][j].getRed()*0.97,
+                                trailMap[i][j].getGreen()*0.97 < 0.01 ? 0 : trailMap[i][j].getGreen()*0.97,
+                                trailMap[i][j].getBlue()*0.97 < 0.01 ? 0 : trailMap[i][j].getBlue()*0.97,
                                 /*trailMap[i][j].getGreen()*0.99,
                                 trailMap[i][j].getBlue()*0.99, */
                                 trailMap[i][j].getOpacity());
