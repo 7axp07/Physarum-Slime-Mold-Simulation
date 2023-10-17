@@ -19,10 +19,12 @@ import static javafx.scene.paint.Color.*;
 
 public class Main extends Application {
 
-    static final int WIDTH = 100;
-    static final int HEIGHT = 100;
-    static final int PARTICLE_NUMBER = 1000;
-    static final double TRAIL_DECAY = 0.90;
+    static int WIDTH = 300;
+    static int HEIGHT = 300;
+    static int PARTICLE_NUMBER = 2000;
+    static double TRAIL_DECAY = 0.9;
+    static int LOOK_LENGTH = 9;
+    static double DIFFUSION_RATE = 0.1;
     Canvas canvas = new Canvas(WIDTH,HEIGHT);
     GraphicsContext gc = canvas.getGraphicsContext2D();
     Color particleColor = CYAN;
@@ -64,7 +66,7 @@ public class Main extends Application {
             particles.add(particle);
         }
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(50), event -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(30), event -> {
            /* for (int i = 0; i < HEIGHT; i++) {
                 for (int j = 0; j < WIDTH; j++) {
                     Color color = new Color(table[i][j], table[i][j], table[i][j], 1);
@@ -91,9 +93,9 @@ public class Main extends Application {
 
             for (int i = 1; i+1 < HEIGHT; i++) {
                 for (int j = 1; j+1 < WIDTH; j++) {
-                    if (table[i][j] >= 0.05 ){
-                    table[i][j] -= 0.05;}
-                    if (table[i][j] <= 0.9){
+                    if (table[i][j] >= 0.1 ){
+                    table[i][j] -= 0.1;}
+                   /* if (table[i][j] <= 0.9){
                     table[i+1][j+1] += 0.01;
                     table[i+1][j] += 0.01;
                     table[i+1][j-1] += 0.01;
@@ -101,7 +103,7 @@ public class Main extends Application {
                     table[i-1][j-1] += 0.01;
                     table[i-1][j] += 0.01;
                     table[i-1][j+1] += 0.01;
-                    table[i][j+1] += 0.01;}
+                    table[i][j+1] += 0.01;}*/
                 }
             }
 
