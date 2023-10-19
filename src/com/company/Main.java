@@ -19,15 +19,16 @@ import static javafx.scene.paint.Color.*;
 
 public class Main extends Application {
 
-    static int WIDTH = 300;
-    static int HEIGHT = 300;
+    static int WIDTH = 100;
+    static int HEIGHT = 100;
     static int PARTICLE_NUMBER = 2000;
     static double TRAIL_DECAY = 0.9;
     static int LOOK_LENGTH = 9;
     static double DIFFUSION_RATE = 0.1;
-    Canvas canvas = new Canvas(WIDTH,HEIGHT);
+    static int ZOOM = 2;
+    Canvas canvas = new Canvas(WIDTH*ZOOM,HEIGHT*ZOOM);
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    Color particleColor = CYAN;
+    Color particleColor = LAVENDER;
     Color backgroundColor = BLACK;
 
 
@@ -42,7 +43,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         AnchorPane root = new AnchorPane();
         root.getChildren().add(canvas);
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        Scene scene = new Scene(root, WIDTH*ZOOM, HEIGHT*ZOOM);
 
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
@@ -56,7 +57,7 @@ public class Main extends Application {
             }
         }
         gc.setFill(BLACK);
-        gc.fillRect(0,0,WIDTH,HEIGHT);
+        gc.fillRect(0,0,WIDTH*ZOOM,HEIGHT*ZOOM);
 
         //System.out.println(Arrays.deepToString(table));
 
@@ -87,7 +88,7 @@ public class Main extends Application {
             for (int p = 0; p < PARTICLE_NUMBER; p++) {
                 trailMap[particles.get(p).x][particles.get(p).y] = particleColor;
                 gc.setFill(trailMap[particles.get(p).x][particles.get(p).y]);
-                gc.fillRect(particles.get(p).x,particles.get(p).y, 1,1);
+                gc.fillRect(particles.get(p).x*ZOOM,particles.get(p).y*ZOOM, ZOOM,ZOOM);
                 particles.get(p).move();
             }
 
@@ -118,7 +119,7 @@ public class Main extends Application {
                                 trailMap[i][j].getBlue()*0.99, */
                                 trailMap[i][j].getOpacity());
                         gc.setFill(trailMap[i][j]);
-                        gc.fillRect(i,j, 1,1);
+                        gc.fillRect(i*ZOOM,j*ZOOM, ZOOM,ZOOM);
                     }
                 }
             }

@@ -1,13 +1,14 @@
 package com.company;
 
 import static com.company.Main.LOOK_LENGTH;
+import static com.company.Main.WIDTH;
 
 public class Particle {
     int x;
     int y;
     Direction direction;
     boolean border = false;
-    double randomness = 0.97;
+    double randomness = 0.99;
 
     /*Sensor sensorL = new Sensor(x+direction.x);
     Sensor sensorR;
@@ -89,7 +90,17 @@ public class Particle {
 
     private double sensor(int x, int y, Direction direction, int lookLength){
         double sum = 0.0;
-        if (x>=Main.WIDTH- LOOK_LENGTH || x<=LOOK_LENGTH || y>=Main.HEIGHT-LOOK_LENGTH || y<= LOOK_LENGTH){lookLength -= LOOK_LENGTH;}
+        if (x>=Main.WIDTH- LOOK_LENGTH){
+            lookLength -= lookLength-(WIDTH-x);}
+        else if (x<=LOOK_LENGTH){
+            lookLength -= (lookLength + x);
+        }
+        else if ( y>=Main.HEIGHT-LOOK_LENGTH){
+            lookLength -= lookLength-(WIDTH-y);
+        }
+        else if (y<= LOOK_LENGTH){
+            lookLength -= (lookLength + y);
+        }
         for (int i = 0; i < lookLength; i++) {
             int xi = x+direction.x;
             int yi = y+direction.y;
