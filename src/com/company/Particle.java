@@ -8,15 +8,15 @@ public class Particle {
     int y;
     Direction direction;
     boolean border = false;
-    double randomness = 0.99;
+    double randomness = 0.97789;
 
     /*Sensor sensorL = new Sensor(x+direction.x);
     Sensor sensorR;
     Sensor sensorFront = new Sensor(x+ direction.x, y+ direction.y);*/
 
     public Particle(){
-        x = (int) (Math.random()*(Main.WIDTH-LOOK_LENGTH-3)+LOOK_LENGTH+1);
-        y = (int) (Math.random()*(Main.HEIGHT-LOOK_LENGTH-3)+LOOK_LENGTH+1);
+        x = (int) (Math.random()*(Main.WIDTH-LOOK_LENGTH-2)+LOOK_LENGTH+1);
+        y = (int) (Math.random()*(Main.HEIGHT-LOOK_LENGTH-2)+LOOK_LENGTH+1);
         direction = Direction.getRandomDirection();
     }
 

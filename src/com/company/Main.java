@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -19,13 +20,13 @@ import static javafx.scene.paint.Color.*;
 
 public class Main extends Application {
 
-    static int WIDTH = 100;
-    static int HEIGHT = 100;
+    static int WIDTH = 200;
+    static int HEIGHT = 200;
     static int PARTICLE_NUMBER = 2000;
     static double TRAIL_DECAY = 0.9;
-    static int LOOK_LENGTH = 9;
+    static int LOOK_LENGTH = 7;
     static double DIFFUSION_RATE = 0.1;
-    static int ZOOM = 2;
+    static int ZOOM = 3;
     Canvas canvas = new Canvas(WIDTH*ZOOM,HEIGHT*ZOOM);
     GraphicsContext gc = canvas.getGraphicsContext2D();
     Color particleColor = LAVENDER;
@@ -41,6 +42,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        GridPane editor = new GridPane();
+
+
         AnchorPane root = new AnchorPane();
         root.getChildren().add(canvas);
         Scene scene = new Scene(root, WIDTH*ZOOM, HEIGHT*ZOOM);
@@ -84,7 +88,7 @@ public class Main extends Application {
                 gc.fillRect(x, y, 2,2);
             }*/
 
-
+            particleColor = new Color(Math.random(), Math.random(), Math.random(), 1);
             for (int p = 0; p < PARTICLE_NUMBER; p++) {
                 trailMap[particles.get(p).x][particles.get(p).y] = particleColor;
                 gc.setFill(trailMap[particles.get(p).x][particles.get(p).y]);
