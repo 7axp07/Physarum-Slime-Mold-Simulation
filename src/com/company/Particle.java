@@ -10,9 +10,6 @@ public class Particle {
     boolean border = false;
     double randomness = 0.97789;
 
-    /*Sensor sensorL = new Sensor(x+direction.x);
-    Sensor sensorR;
-    Sensor sensorFront = new Sensor(x+ direction.x, y+ direction.y);*/
 
     public Particle(){
         x = (int) (Math.random()*(Main.WIDTH-LOOK_LENGTH-2)+LOOK_LENGTH+1);
