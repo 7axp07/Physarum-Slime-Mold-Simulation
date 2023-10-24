@@ -4,6 +4,8 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -16,6 +18,8 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 import static javafx.scene.paint.Color.*;
 
 public class Main extends Application {
@@ -23,14 +27,15 @@ public class Main extends Application {
     static int WIDTH = 200;
     static int HEIGHT = 200;
     static int PARTICLE_NUMBER = 2000;
-    static double TRAIL_DECAY = 0.9;
+    static double TRAIL_DECAY = 0.3;
     static int LOOK_LENGTH = 7;
     static double DIFFUSION_RATE = 0.1;
     static int ZOOM = 3;
-    Canvas canvas = new Canvas(WIDTH*ZOOM,HEIGHT*ZOOM);
-    GraphicsContext gc = canvas.getGraphicsContext2D();
-    Color particleColor = LAVENDER;
-    Color backgroundColor = BLACK;
+    static Stage stage;
+    static Canvas canvas = new Canvas(WIDTH*ZOOM,HEIGHT*ZOOM);
+    static GraphicsContext gc = canvas.getGraphicsContext2D();
+    static Color particleColor = LAVENDER;
+    static Color backgroundColor = BLACK;
 
 
     static double[][] table = new double[WIDTH][HEIGHT];
@@ -42,13 +47,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        GridPane editor = new GridPane();
 
+        Parent editorWindow = FXMLLoader.load(getClass().getResource("Editor.fxml"));
 
-        AnchorPane root = new AnchorPane();
-        root.getChildren().add(canvas);
-        Scene scene = new Scene(root, WIDTH*ZOOM, HEIGHT*ZOOM);
+        stage.setScene(new Scene(editorWindow));
+        stage.setTitle("Simulation Editor");
+        stage.show();
+    }
 
+    static public void generateSim(){
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 table[i][j] = Math.random();
@@ -88,7 +95,7 @@ public class Main extends Application {
                 gc.fillRect(x, y, 2,2);
             }*/
 
-            particleColor = new Color(Math.random(), Math.random(), Math.random(), 1);
+            // particleColor = new Color(Math.random(), Math.random(), Math.random(), 1);
             for (int p = 0; p < PARTICLE_NUMBER; p++) {
                 trailMap[particles.get(p).x][particles.get(p).y] = particleColor;
                 gc.setFill(trailMap[particles.get(p).x][particles.get(p).y]);
@@ -99,7 +106,7 @@ public class Main extends Application {
             for (int i = 1; i+1 < HEIGHT; i++) {
                 for (int j = 1; j+1 < WIDTH; j++) {
                     if (table[i][j] >= 0.1 ){
-                    table[i][j] -= 0.1;}
+                        table[i][j] -= 0.1;}
                    /* if (table[i][j] <= 0.9){
                     table[i+1][j+1] += 0.01;
                     table[i+1][j] += 0.01;
@@ -135,8 +142,9 @@ public class Main extends Application {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("a");
-        primaryStage.show();
+        AnchorPane root = new AnchorPane();
+        root.getChildren().add(canvas);
+        Scene simulationScene = new Scene(root, WIDTH*ZOOM, HEIGHT*ZOOM);
+        stage.setScene(simulationScene);
     }
 }
