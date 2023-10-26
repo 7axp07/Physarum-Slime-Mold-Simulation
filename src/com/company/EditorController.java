@@ -9,9 +9,11 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import static com.company.Main.*;
+import static javafx.scene.paint.Color.*;
 
 public class EditorController {
 
@@ -45,11 +47,6 @@ public class EditorController {
     @FXML
     private Slider numberSlider;
 
-    @FXML
-    private Text BGColorText;
-
-    @FXML
-    private ColorPicker bgColorPicker;
 
     @FXML
     private CheckBox colorChanger;
@@ -57,39 +54,28 @@ public class EditorController {
     @FXML
     private Slider trailSlider;
 
-    @FXML
-    void changeColorMode(ActionEvent event) {
-
-    }
 
     @FXML
     void generate(ActionEvent event) {
+        isColourChanging = false;
+        PARTICLE_NUMBER = 1000;
+        TRAIL_DECAY = 0.3;
+        LOOK_LENGTH = 7;
+        DIFFUSION_RATE = 0.1;
+        ZOOM = 4;
+        particleColor = WHITE;
+
+        particleColor = particleColorPicker.getValue();
+        if (colorChanger.isSelected()){
+            isColourChanging = true;
+        }
+        LOOK_LENGTH = (int) lookSlider.getValue();
+        PARTICLE_NUMBER = (int) numberSlider.getValue();
+        TRAIL_DECAY = 1- trailSlider.getValue();
         Main.generateSim();
     }
 
-    @FXML
-    void pickBGColor(ActionEvent event) {
-        backgroundColor = bgColorPicker.getValue();
-    }
 
-    @FXML
-    void pickParticleColor(ActionEvent event) {
-        particleColor = particleColorPicker.getValue();
-    }
 
-    @FXML
-    void setLook(MouseEvent event) {
-        LOOK_LENGTH = (int) lookSlider.getValue();
-    }
-
-    @FXML
-    void setNumber(MouseEvent event) {
-        PARTICLE_NUMBER = (int) numberSlider.getValue();
-    }
-
-    @FXML
-    void setTrailDecay(MouseEvent event) {
-        TRAIL_DECAY = 1- trailSlider.getValue();
-    }
 
 }

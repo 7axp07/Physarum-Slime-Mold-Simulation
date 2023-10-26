@@ -24,18 +24,20 @@ import static javafx.scene.paint.Color.*;
 
 public class Main extends Application {
 
-    static int WIDTH = 200;
-    static int HEIGHT = 200;
-    static int PARTICLE_NUMBER = 2000;
+    static int WIDTH = 100;
+    static int HEIGHT = 100;
+    static int PARTICLE_NUMBER = 1000;
     static double TRAIL_DECAY = 0.3;
     static int LOOK_LENGTH = 7;
     static double DIFFUSION_RATE = 0.1;
-    static int ZOOM = 3;
+    static int ZOOM = 4;
+    static boolean isColourChanging = false;
+    static Color particleColor = LAVENDER;
+    static Color backgroundColor = BLACK;
+
     static Stage stage;
     static Canvas canvas = new Canvas(WIDTH*ZOOM,HEIGHT*ZOOM);
     static GraphicsContext gc = canvas.getGraphicsContext2D();
-    static Color particleColor = LAVENDER;
-    static Color backgroundColor = BLACK;
 
 
     static double[][] table = new double[WIDTH][HEIGHT];
@@ -50,12 +52,14 @@ public class Main extends Application {
 
         Parent editorWindow = FXMLLoader.load(getClass().getResource("Editor.fxml"));
 
+        stage = primaryStage;
         stage.setScene(new Scene(editorWindow));
         stage.setTitle("Simulation Editor");
         stage.show();
     }
 
     static public void generateSim(){
+        Stage simulationStage = new Stage();
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 table[i][j] = Math.random();
@@ -67,7 +71,7 @@ public class Main extends Application {
                 trailMap[i][j] = backgroundColor;
             }
         }
-        gc.setFill(BLACK);
+        gc.setFill(backgroundColor);
         gc.fillRect(0,0,WIDTH*ZOOM,HEIGHT*ZOOM);
 
         //System.out.println(Arrays.deepToString(table));
@@ -95,7 +99,9 @@ public class Main extends Application {
                 gc.fillRect(x, y, 2,2);
             }*/
 
-            // particleColor = new Color(Math.random(), Math.random(), Math.random(), 1);
+            if (isColourChanging){
+                particleColor = new Color(Math.random(), Math.random(), Math.random(), 1);
+            }
             for (int p = 0; p < PARTICLE_NUMBER; p++) {
                 trailMap[particles.get(p).x][particles.get(p).y] = particleColor;
                 gc.setFill(trailMap[particles.get(p).x][particles.get(p).y]);
@@ -145,6 +151,13 @@ public class Main extends Application {
         AnchorPane root = new AnchorPane();
         root.getChildren().add(canvas);
         Scene simulationScene = new Scene(root, WIDTH*ZOOM, HEIGHT*ZOOM);
-        stage.setScene(simulationScene);
+        simulationStage.setScene(simulationScene);
+        if (simulationStage.isShowing()){
+            simulationStage.close();
+        }
+        simulationStage.show();
     }
 }
+
+// TODO: 26.10.2023 add more bg colors
+// TODO: 26.10.2023 make simulations close when a new one opens
