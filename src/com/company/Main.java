@@ -36,6 +36,7 @@ public class Main extends Application {
     static Color backgroundColor = BLACK;
 
     static Stage stage;
+    static Stage simulationStage = new Stage();
     static Canvas canvas = new Canvas(WIDTH*ZOOM,HEIGHT*ZOOM);
     static GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -59,7 +60,6 @@ public class Main extends Application {
     }
 
     static public void generateSim(){
-        Stage simulationStage = new Stage();
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 table[i][j] = Math.random();
@@ -152,9 +152,6 @@ public class Main extends Application {
         root.getChildren().add(canvas);
         Scene simulationScene = new Scene(root, WIDTH*ZOOM, HEIGHT*ZOOM);
         simulationStage.setScene(simulationScene);
-        if (simulationStage.isShowing()){
-            simulationStage.close();
-        }
         simulationStage.show();
     }
 }

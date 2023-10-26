@@ -57,6 +57,7 @@ public class EditorController {
 
     @FXML
     void generate(ActionEvent event) {
+        simulationStage.close();
         isColourChanging = false;
         PARTICLE_NUMBER = 1000;
         TRAIL_DECAY = 0.3;
