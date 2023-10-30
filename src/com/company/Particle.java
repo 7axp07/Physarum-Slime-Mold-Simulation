@@ -8,7 +8,7 @@ public class Particle {
     int y;
     Direction direction;
     boolean border = false;
-    double randomness = 0.97789;
+    double randomness = 0.99;
 
 
     public Particle(){
