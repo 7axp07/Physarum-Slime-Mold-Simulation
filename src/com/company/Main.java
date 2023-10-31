@@ -66,6 +66,8 @@ public class Main extends Application {
         stage = primaryStage;
         stage.setScene(new Scene(editorWindow));
         stage.setTitle("Simulation Editor");
+        stage.setX(20);
+        stage.setY(150);
         stage.show();
     }
 
@@ -165,6 +167,7 @@ public class Main extends Application {
         Scene simulationScene = new Scene(root, WIDTH * ZOOM, HEIGHT * ZOOM);
         simulationStage.setScene(simulationScene);
         simulationStage.show();
+
 
 
         simulationScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {

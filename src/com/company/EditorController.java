@@ -2,10 +2,7 @@ package com.company;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -53,6 +50,13 @@ public class EditorController {
 
     @FXML
     private Slider trailSlider;
+
+
+    @FXML
+    private Text presetText;
+
+    @FXML
+    private ComboBox<String> presetComboBox;
 
 
     @FXML
