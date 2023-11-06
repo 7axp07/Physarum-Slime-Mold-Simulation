@@ -56,7 +56,7 @@ public class EditorController {
     private Text presetText;
 
     @FXML
-    private ComboBox<String> presetComboBox;
+    private ComboBox<Preset> presetComboBox;
 
 
     @FXML
@@ -78,6 +78,16 @@ public class EditorController {
         PARTICLE_NUMBER = (int) numberSlider.getValue();
         TRAIL_DECAY = 1- trailSlider.getValue();
         Main.generateSim();
+    }
+
+    @FXML
+    void setPreset(ActionEvent event) {
+
+    }
+
+    @FXML
+    void setNewPreset(ActionEvent event) {
+
     }
 
 
