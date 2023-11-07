@@ -58,6 +58,15 @@ public class EditorController {
     @FXML
     private ComboBox<Preset> presetComboBox;
 
+    @FXML
+    private TextField presetNameTextField;
+
+    @FXML
+    void initialize(){
+        presetComboBox.getItems().addAll(FileController.getAllPresets());
+
+    };
+
 
     @FXML
     void generate(ActionEvent event) {
@@ -87,7 +96,10 @@ public class EditorController {
 
     @FXML
     void setNewPreset(ActionEvent event) {
-
+        if (!(presetNameTextField.getText() == null)){
+            Preset preset = new Preset(presetNameTextField.getText(), (int) numberSlider.getValue(), particleColorPicker.getValue(), isColourChanging, 1-trailSlider.getValue(),(int) lookSlider.getValue());
+            FileController.addPreset(preset.toString());
+        }
     }
 
 

@@ -61,6 +61,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        Preset test = new Preset("test",3, BLUE, false, 0.1, 3 );
+        System.out.println(test.toString());
+
         Parent editorWindow = FXMLLoader.load(getClass().getResource("Editor.fxml"));
 
         stage = primaryStage;
