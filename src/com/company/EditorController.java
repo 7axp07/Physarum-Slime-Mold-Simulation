@@ -105,7 +105,8 @@ public class EditorController {
         trailSlider.setValue(1-preset.trailDecay);
         visionSlider.setValue(preset.visionRange);
 
-
+// TODO: 09.11.2023 button.setOnAction(event -> {
+//            FileChooser fileChooser = new FileChooser(); make a filechooser to save screencaps? mayve
 
     }
 
