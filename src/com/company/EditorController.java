@@ -98,7 +98,10 @@ public class EditorController {
            // colorChanger.isSelected();
             colorChanger.setSelected(true);
         }
-        
+        else {
+            colorChanger.setSelected(false);
+
+        }
         trailSlider.setValue(1-preset.trailDecay);
         visionSlider.setValue(preset.visionRange);
 
@@ -106,10 +109,12 @@ public class EditorController {
 
     }
 
+
+
     @FXML
     void setNewPreset(ActionEvent event) {
         if (!(presetNameTextField.getText() == null)){
-            Preset preset = new Preset(presetNameTextField.getText(), (int) numberSlider.getValue(), particleColorPicker.getValue(), isColourChanging, 1-trailSlider.getValue(),(int) visionSlider.getValue());
+            Preset preset = new Preset(presetNameTextField.getText(), (int) numberSlider.getValue(), particleColorPicker.getValue(), colorChanger.isSelected(), 1-trailSlider.getValue(),(int) visionSlider.getValue());
             Main.presets.add(preset);
             FileController.addPreset();
             presetComboBox.getItems().add(preset);
