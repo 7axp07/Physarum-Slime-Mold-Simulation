@@ -50,7 +50,7 @@ public class Main extends Application {
     static Canvas canvas = new Canvas(WIDTH * ZOOM, HEIGHT * ZOOM);
     static GraphicsContext gc = canvas.getGraphicsContext2D();
 
-
+    static List<Preset> presets = FileController.getAllPresets();
     static double[][] table = new double[WIDTH][HEIGHT];
     static Color[][] trailMap = new Color[WIDTH][HEIGHT];
 

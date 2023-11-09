@@ -27,7 +27,7 @@ public class EditorController {
     private ColorPicker particleColorPicker;
 
     @FXML
-    private Slider lookSlider;
+    private Slider visionSlider;
 
     @FXML
     private Text particleNumberText;
@@ -63,7 +63,7 @@ public class EditorController {
 
     @FXML
     void initialize(){
-        presetComboBox.getItems().addAll(FileController.getAllPresets());
+        presetComboBox.getItems().addAll(Main.presets);
 
     };
 
@@ -83,7 +83,7 @@ public class EditorController {
         if (colorChanger.isSelected()){
             isColourChanging = true;
         }
-        LOOK_LENGTH = (int) lookSlider.getValue();
+        LOOK_LENGTH = (int) visionSlider.getValue();
         PARTICLE_NUMBER = (int) numberSlider.getValue();
         TRAIL_DECAY = 1- trailSlider.getValue();
         Main.generateSim();
@@ -91,14 +91,29 @@ public class EditorController {
 
     @FXML
     void setPreset(ActionEvent event) {
+        Preset preset = presetComboBox.getSelectionModel().getSelectedItem();
+        numberSlider.setValue(preset.number);
+        particleColorPicker.setValue(preset.color);
+        if (preset.isColourChanging){
+           // colorChanger.isSelected();
+            colorChanger.setSelected(true);
+        }
+        
+        trailSlider.setValue(1-preset.trailDecay);
+        visionSlider.setValue(preset.visionRange);
+
+
 
     }
 
     @FXML
     void setNewPreset(ActionEvent event) {
         if (!(presetNameTextField.getText() == null)){
-            Preset preset = new Preset(presetNameTextField.getText(), (int) numberSlider.getValue(), particleColorPicker.getValue(), isColourChanging, 1-trailSlider.getValue(),(int) lookSlider.getValue());
-            FileController.addPreset(preset.toString());
+            Preset preset = new Preset(presetNameTextField.getText(), (int) numberSlider.getValue(), particleColorPicker.getValue(), isColourChanging, 1-trailSlider.getValue(),(int) visionSlider.getValue());
+            Main.presets.add(preset);
+            FileController.addPreset();
+            presetComboBox.getItems().add(preset);
+            presetNameTextField.clear();
         }
     }
 
