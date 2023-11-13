@@ -8,6 +8,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 
 import static com.company.Main.*;
 import static javafx.scene.paint.Color.*;
@@ -105,11 +109,7 @@ public class EditorController {
         trailSlider.setValue(1-preset.trailDecay);
         visionSlider.setValue(preset.visionRange);
 
-// TODO: 09.11.2023 button.setOnAction(event -> {
-//            FileChooser fileChooser = new FileChooser(); make a filechooser to save screencaps? mayve
-
     }
-
 
 
     @FXML

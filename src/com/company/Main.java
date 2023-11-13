@@ -158,7 +158,7 @@ public class Main extends Application {
                 }
             }
 
-            // TODO: 05.10.2023 ADD RGB MAP FOR TRAIL INTENSITY (OTHER table is for the pheronome intensity))))
+           //  TODO: 05.10.2023 ADD RGB MAP FOR TRAIL INTENSITY (OTHER table is for the pheromone intensity))))
 
         }));
 
@@ -199,5 +199,3 @@ public class Main extends Application {
     }
 }
 
-// TODO: 26.10.2023 add more bg colors ?? maybe
-// TODO: 26.10.2023 allow adding multiple Editor setting (custom sight particles color etc)
