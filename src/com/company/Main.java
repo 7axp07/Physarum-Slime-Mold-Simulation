@@ -39,7 +39,7 @@ public class Main extends Application {
     static int PARTICLE_NUMBER = 1000;
     static double TRAIL_DECAY = 0.3;
     static int LOOK_LENGTH = 7;
-    static double DIFFUSION_RATE = 0.1;
+    static double DIFFUSION_RATE = 0.01;
     static int ZOOM = 4;
     static boolean isColourChanging = false;
     static Color particleColor = LAVENDER;
@@ -61,7 +61,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Preset test = new Preset("test",3, BLUE, false, 0.1, 3 );
+        Preset test = new Preset("test",3, BLUE, false, 0.1,0.02 ,3 );
         System.out.println(test.toString());
 
         Parent editorWindow = FXMLLoader.load(getClass().getResource("Editor.fxml"));
@@ -130,15 +130,8 @@ public class Main extends Application {
                     if (table[i][j] >= 0.1) {
                         table[i][j] -= 0.1;
                     }
-                   /* if (table[i][j] <= 0.9){
-                    table[i+1][j+1] += 0.01;
-                    table[i+1][j] += 0.01;
-                    table[i+1][j-1] += 0.01;
-                    table[i][j-1] += 0.01;
-                    table[i-1][j-1] += 0.01;
-                    table[i-1][j] += 0.01;
-                    table[i-1][j+1] += 0.01;
-                    table[i][j+1] += 0.01;}*/
+                    if (table[i][j] <= 0.9 && table[i][j] >= DIFFUSION_RATE*10){
+                    diffuse(i, j, DIFFUSION_RATE);}
                 }
             }
 
@@ -196,6 +189,18 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void diffuse(int i, int j, double diffusionRate){
+        table[i+1][j+1] += diffusionRate;
+        table[i+1][j] += diffusionRate;
+        table[i+1][j-1] += diffusionRate;
+        table[i][j-1] += diffusionRate;
+        table[i-1][j-1] += diffusionRate;
+        table[i-1][j] += diffusionRate;
+        table[i-1][j+1] += diffusionRate;
+        table[i][j+1] += diffusionRate;
+        table[i][j] -= diffusionRate*10;
     }
 }
 

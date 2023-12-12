@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 public class FileController {
 
-    // TODO: 07.11.2023 FIX THIS AAAAAAAAAAAAAAAAAAAAAAAAAAUGH
 
     public static void addPreset(){
         try {
@@ -33,7 +32,7 @@ public class FileController {
                 String line = scanner.nextLine();
                 String[] array = line.split(";");
                 // test;3;0x0000ffff;false;0.1;3
-                presets.add(new Preset(array[0], Integer.parseInt(array[1]), Color.web(array[2]) ,Boolean.parseBoolean(array[3]), Double.parseDouble(array[4]), Integer.parseInt(array[5])));
+                presets.add(new Preset(array[0], Integer.parseInt(array[1]), Color.web(array[2]) ,Boolean.parseBoolean(array[3]), Double.parseDouble(array[4]),Double.parseDouble(array[5]), Integer.parseInt(array[6])));
             }
 
             scanner.close();

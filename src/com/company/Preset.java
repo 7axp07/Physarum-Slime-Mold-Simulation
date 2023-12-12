@@ -9,13 +9,15 @@ public class Preset {
     boolean isColourChanging;
     double trailDecay;
     int visionRange;
+    double diffusionRate;
 
-    public Preset(String name, int number, Color color, boolean isColourChanging, double trailDecay, int visionRange) {
+    public Preset(String name, int number, Color color, boolean isColourChanging, double trailDecay, double diffusionRate, int visionRange) {
         this.name = name;
         this.number = number;
         this.color = color;
         this.isColourChanging = isColourChanging;
         this.trailDecay = trailDecay;
+        this.diffusionRate = diffusionRate;
         this.visionRange = visionRange;
     }
 
@@ -30,6 +32,7 @@ public class Preset {
                 ";" + color +
                 ";" + isColourChanging +
                 ";" + trailDecay +
+                ";" + diffusionRate +
                 ";" + visionRange
                 ;
     }

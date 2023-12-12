@@ -48,6 +48,8 @@ public class EditorController {
     @FXML
     private Slider numberSlider;
 
+    @FXML
+    private Slider diffusionSlider;
 
     @FXML
     private CheckBox colorChanger;
@@ -79,7 +81,7 @@ public class EditorController {
         PARTICLE_NUMBER = 1000;
         TRAIL_DECAY = 0.3;
         LOOK_LENGTH = 7;
-        DIFFUSION_RATE = 0.1;
+        DIFFUSION_RATE = 0.01;
         ZOOM = 4;
         particleColor = WHITE;
 
@@ -90,6 +92,7 @@ public class EditorController {
         LOOK_LENGTH = (int) visionSlider.getValue();
         PARTICLE_NUMBER = (int) numberSlider.getValue();
         TRAIL_DECAY = 1- trailSlider.getValue();
+        DIFFUSION_RATE = diffusionSlider.getValue();
         Main.generateSim();
     }
 
@@ -107,6 +110,7 @@ public class EditorController {
 
         }
         trailSlider.setValue(1-preset.trailDecay);
+        diffusionSlider.setValue(preset.diffusionRate);
         visionSlider.setValue(preset.visionRange);
 
     }
@@ -115,7 +119,7 @@ public class EditorController {
     @FXML
     void setNewPreset(ActionEvent event) {
         if (!(presetNameTextField.getText() == null)){
-            Preset preset = new Preset(presetNameTextField.getText(), (int) numberSlider.getValue(), particleColorPicker.getValue(), colorChanger.isSelected(), 1-trailSlider.getValue(),(int) visionSlider.getValue());
+            Preset preset = new Preset(presetNameTextField.getText(), (int) numberSlider.getValue(), particleColorPicker.getValue(), colorChanger.isSelected(), 1-trailSlider.getValue(), diffusionSlider.getValue(), (int) visionSlider.getValue());
             Main.presets.add(preset);
             FileController.addPreset();
             presetComboBox.getItems().add(preset);
