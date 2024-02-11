@@ -68,7 +68,7 @@ public class Main extends Application {
 
         stage = primaryStage;
         stage.setScene(new Scene(editorWindow));
-        stage.setTitle("Simulation Editor");
+        stage.setTitle("Control Panel");
         stage.setX(20);
         stage.setY(150);
         stage.show();
