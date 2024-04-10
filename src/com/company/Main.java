@@ -6,43 +6,42 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.security.Key;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
 
 import static javafx.scene.paint.Color.*;
 
 public class Main extends Application {
 
-    static int WIDTH = 200;
-    static int HEIGHT = 200;
+    static final int WIDTH = 200;
+    static final int HEIGHT = 200;
+    static int ZOOM = 4;
+
     static int PARTICLE_NUMBER = 1000;
     static double TRAIL_DECAY = 0.3;
     static int LOOK_LENGTH = 7;
     static double DIFFUSION_RATE = 0.01;
-    static int ZOOM = 4;
+
     static boolean isColourChanging = false;
-    static Color particleColor = LAVENDER;
+    static Color particleColor = WHITE;
     static Color backgroundColor = BLACK;
 
     static Stage stage;
@@ -54,6 +53,9 @@ public class Main extends Application {
     static double[][] table = new double[WIDTH][HEIGHT];
     static Color[][] trailMap = new Color[WIDTH][HEIGHT];
 
+    static List<Screen> screens = Screen.getScreens();
+    static Rectangle2D bounds = screens.get(1).getVisualBounds();
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -61,15 +63,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Preset test = new Preset("test",3, BLUE, false, 0.1,0.02 ,3 );
-        System.out.println(test.toString());
+        Parent editorWindow = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Editor.fxml")));
 
-        Parent editorWindow = FXMLLoader.load(getClass().getResource("Editor.fxml"));
+
 
         stage = primaryStage;
         stage.setScene(new Scene(editorWindow));
         stage.setTitle("Control Panel");
-        stage.setX(20);
+        stage.setX(bounds.getMinX() +100);
         stage.setY(150);
         stage.show();
     }
@@ -81,7 +82,6 @@ public class Main extends Application {
             }
         }
         //Background
-
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 trailMap[i][j] = backgroundColor;
@@ -90,8 +90,7 @@ public class Main extends Application {
         gc.setFill(backgroundColor);
         gc.fillRect(0, 0, WIDTH * ZOOM, HEIGHT * ZOOM);
 
-        //System.out.println(Arrays.deepToString(table));
-
+        //Particle creation
         List<Particle> particles = new ArrayList<>(PARTICLE_NUMBER);
         for (int i = 0; i < PARTICLE_NUMBER; i++) {
             Particle particle = new Particle();
@@ -99,21 +98,6 @@ public class Main extends Application {
         }
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(30), event -> {
-           /* for (int i = 0; i < HEIGHT; i++) {
-                for (int j = 0; j < WIDTH; j++) {
-                    Color color = new Color(table[i][j], table[i][j], table[i][j], 1);
-                    gc.setFill(color);
-                    gc.fillRect(j,i,1,1);
-                }}*/
-            /*for (int i = 0; i < PARTICLE_NUMBER; i++) {
-                gc.setFill(particleColor);
-                int x = particles.get(i).x;
-                int y = particles.get(i).y;
-                particles.get(i).move();
-                gc.fillRect(particles.get(i).x, particles.get(i).y, 2,2);
-                gc.setFill(RED);
-                gc.fillRect(x, y, 2,2);
-            }*/
 
             if (isColourChanging) {
                 particleColor = new Color(Math.random(), Math.random(), Math.random(), 1);
@@ -142,16 +126,12 @@ public class Main extends Application {
                                 trailMap[i][j].getRed() * TRAIL_DECAY < 0.01 ? 0 : trailMap[i][j].getRed() * TRAIL_DECAY,
                                 trailMap[i][j].getGreen() * TRAIL_DECAY < 0.01 ? 0 : trailMap[i][j].getGreen() * TRAIL_DECAY,
                                 trailMap[i][j].getBlue() * TRAIL_DECAY < 0.01 ? 0 : trailMap[i][j].getBlue() * TRAIL_DECAY,
-                                /*trailMap[i][j].getGreen()*0.99,
-                                trailMap[i][j].getBlue()*0.99, */
                                 trailMap[i][j].getOpacity());
                         gc.setFill(trailMap[i][j]);
                         gc.fillRect(i * ZOOM, j * ZOOM, ZOOM, ZOOM);
                     }
                 }
             }
-
-           //  TODO: 05.10.2023 ADD RGB MAP FOR TRAIL INTENSITY (OTHER table is for the pheromone intensity))))
 
         }));
 
@@ -161,6 +141,8 @@ public class Main extends Application {
         AnchorPane root = new AnchorPane();
         root.getChildren().add(canvas);
         Scene simulationScene = new Scene(root, WIDTH * ZOOM, HEIGHT * ZOOM);
+        simulationStage.setX(bounds.getMinX() + 700);
+        simulationStage.setY(100);
         simulationStage.setScene(simulationScene);
         simulationStage.show();
 

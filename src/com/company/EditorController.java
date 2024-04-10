@@ -3,15 +3,12 @@ package com.company;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 
-import java.io.File;
+
+
 
 import static com.company.Main.*;
 import static javafx.scene.paint.Color.*;
@@ -102,7 +99,6 @@ public class EditorController {
         numberSlider.setValue(preset.number);
         particleColorPicker.setValue(preset.color);
         if (preset.isColourChanging){
-           // colorChanger.isSelected();
             colorChanger.setSelected(true);
         }
         else {
@@ -119,7 +115,9 @@ public class EditorController {
     @FXML
     void setNewPreset(ActionEvent event) {
         if (!(presetNameTextField.getText() == null)){
-            Preset preset = new Preset(presetNameTextField.getText(), (int) numberSlider.getValue(), particleColorPicker.getValue(), colorChanger.isSelected(), 1-trailSlider.getValue(), diffusionSlider.getValue(), (int) visionSlider.getValue());
+            Preset preset = new Preset(presetNameTextField.getText(), (int) numberSlider.getValue(),
+                    particleColorPicker.getValue(), colorChanger.isSelected(), 1-trailSlider.getValue(),
+                    diffusionSlider.getValue(), (int) visionSlider.getValue());
             Main.presets.add(preset);
             FileController.addPreset();
             presetComboBox.getItems().add(preset);

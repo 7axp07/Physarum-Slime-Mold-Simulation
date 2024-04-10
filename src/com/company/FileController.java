@@ -31,15 +31,14 @@ public class FileController {
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
                 String[] array = line.split(";");
-                // test;3;0x0000ffff;false;0.1;3
-                presets.add(new Preset(array[0], Integer.parseInt(array[1]), Color.web(array[2]) ,Boolean.parseBoolean(array[3]), Double.parseDouble(array[4]),Double.parseDouble(array[5]), Integer.parseInt(array[6])));
+                presets.add(new Preset(array[0], Integer.parseInt(array[1]), Color.web(array[2]) ,
+                        Boolean.parseBoolean(array[3]), Double.parseDouble(array[4]),Double.parseDouble(array[5]),
+                        Integer.parseInt(array[6])));
             }
-
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         return presets;
     }
 

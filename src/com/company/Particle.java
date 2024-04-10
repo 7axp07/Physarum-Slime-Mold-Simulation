@@ -39,47 +39,37 @@ public class Particle {
         }
 
         Main.table[x][y] += 10;
-      /*  if (Main.table[x][y] < 1){
-            Main.table[x][y] += Main.table[x][y]/2;
-        }*/
-
     }
 
     private Direction sense(Direction current, int lookLenght) {
-        double front = sensor(x,y,current, lookLenght);
-                //Main.table[x+current.x][y+current.y];
-        double frontright =  sensor(x, y,Direction.getFrontRightTurn(current), lookLenght);
-                //Main.table[x+Direction.getFrontRightTurn(current).x ][y+Direction.getFrontRightTurn(current).y];
-        double frontleft = sensor(x,y,Direction.getFrontLeftTurn(current), lookLenght);
-                //Main.table[x+Direction.getFrontLeftTurn(current).x][y+Direction.getFrontLeftTurn(current).y];
-       /* if (!border && lookLenght > 1){
-            front += Main.table[x+current.x+current.x][y+current.y+current.y];
-            frontright += Main.table[x+Direction.getFrontRightTurn(current).x+Direction.getFrontRightTurn(Direction.getFrontRightTurn(current)).x ][y+Direction.getFrontRightTurn(current).y+Direction.getFrontRightTurn(Direction.getFrontRightTurn(current)).y];
-            frontleft += Main.table[x+Direction.getFrontLeftTurn(current).x+Direction.getFrontLeftTurn(Direction.getFrontLeftTurn(current)).x][y+Direction.getFrontLeftTurn(current).y+Direction.getFrontLeftTurn(Direction.getFrontLeftTurn(current)).y];
-        }*/
+        double front = sensor(x, y, current, lookLenght);
+        double frontright = sensor(x, y, Direction.getFrontRightTurn(current), lookLenght);
+        double frontleft = sensor(x, y, Direction.getFrontLeftTurn(current), lookLenght);
+
         double max = front;
-        if (Math.max(max, frontright) == frontright){
-         max = frontright;
-         return Direction.getFrontRightTurn(current);
-        }
-        else if (max == frontright){
-            if (Math.random()>0.5){
+        if (frontright > frontleft) {
+            if (Math.max(max, frontright) == frontright) {
+                max = frontright;
                 return Direction.getFrontRightTurn(current);
             }
-            else {
-               return current;
+            else if (max == frontright) {
+                if (Math.random() > 0.5) {
+                    return Direction.getFrontRightTurn(current);
+                }
+                else {
+                    return current;
+                }
             }
-        }
-        else if (Math.max(max, frontleft) == frontleft){
-            max = frontleft;
-            return Direction.getFrontLeftTurn(current);
-        }
-        else if (max == frontleft){
-            if (Math.random()>0.5){
+        } else {
+            if (Math.max(max, frontleft) == frontleft) {
+                max = frontleft;
                 return Direction.getFrontLeftTurn(current);
-            }
-            else {
-                return current;
+            } else if (max == frontleft) {
+                if (Math.random() > 0.5) {
+                    return Direction.getFrontLeftTurn(current);
+                } else {
+                    return current;
+                }
             }
         }
         return current;
