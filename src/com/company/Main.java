@@ -53,8 +53,6 @@ public class Main extends Application {
     static double[][] table = new double[WIDTH][HEIGHT];
     static Color[][] trailMap = new Color[WIDTH][HEIGHT];
 
-    static List<Screen> screens = Screen.getScreens();
-    static Rectangle2D bounds = screens.get(1).getVisualBounds();
 
     public static void main(String[] args) {
         launch(args);
@@ -65,12 +63,9 @@ public class Main extends Application {
 
         Parent editorWindow = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Editor.fxml")));
 
-
-
         stage = primaryStage;
         stage.setScene(new Scene(editorWindow));
         stage.setTitle("Control Panel");
-        stage.setX(bounds.getMinX() +100);
         stage.setY(150);
         stage.show();
     }
@@ -141,7 +136,6 @@ public class Main extends Application {
         AnchorPane root = new AnchorPane();
         root.getChildren().add(canvas);
         Scene simulationScene = new Scene(root, WIDTH * ZOOM, HEIGHT * ZOOM);
-        simulationStage.setX(bounds.getMinX() + 700);
         simulationStage.setY(100);
         simulationStage.setScene(simulationScene);
         simulationStage.show();
